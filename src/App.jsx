@@ -1,9 +1,10 @@
 import React from 'react'
+import TodoApp from './components/TodoApp'
 
 const App = () => {
   return (
     <div>
-      <h1 className='bg-amber-200'>This is testing purpose</h1>
+      <TodoApp/>
     </div>
   )
 }
