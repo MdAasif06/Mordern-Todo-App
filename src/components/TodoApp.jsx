@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 
 const TodoApp = () => {
+  const [task,setTask]=useState("");
   const [tasks, setTasks] = useState([
     { task: "Make Dosa for mummy", completed: "flase" },
     { task: "Make Dosa for mummy", completed: "flase" },
-    { task: "Make Dosa for mummy", completed: "flase" },
-    { task: "Make Dosa for mummy", completed: "flase" },
-    { task: "Make Dosa for mummy", completed: "flase" },
-    { task: "Make Dosa for mummy", completed: "flase" },
-    { task: "Make Dosa for mummy", completed: "flase" },
-    { task: "Make Dosa for mummy", completed: "flase" },
-    { task: "Make Dosa for mummy", completed: "flase" },
-    { task: "Make Dosa for mummy", completed: "flase" },
-    { task: "Make Dosa for mummy", completed: "flase" },
 ]);
+
+const addTask=(e)=>{
+  // e.preventDefault()
+  setTasks([...tasks,{task:task,completed:false}])
+  setTask('')
+}
 
   return (
     <div className="h-screen bg-black text-white pt-15">
@@ -22,12 +20,13 @@ const TodoApp = () => {
         <div className="text-green-400 text-3xl font-semibold">TODO App</div>
         {/* ----------input and button section */}
         <div className="flex gap-4">
-          <input
+          <input onChange={(e)=>setTask(e.target.value)} value={task}
+          onKeyDown={(e)=>{e.key === 'Enter' && addTask()}}
             className="rounded-lg px-5 py-3 w-full bg-[#222] outline-none"
             type="text"
             placeholder="Enter your new task"
           />
-          <button className="cursor-pointer bg-green-400 px-5 py-3 rounded-lg text-black font-semibold">
+          <button onClick={addTask} className="cursor-pointer bg-green-400 px-5 py-3 rounded-lg text-black font-semibold">
             Add
           </button>
         </div>
