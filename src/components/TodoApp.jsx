@@ -3,8 +3,8 @@ import React, { useState } from "react";
 const TodoApp = () => {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([
-    { task: "Make Dosa for mummy", completed: "flase" },
-    { task: "Make Dosa for mummy", completed: "flase" },
+    { task: "Make Dosa for mummy", completed: true },
+    { task: "Make Dosa for fufi", completed: false },
   ]);
 
   const addTask = (e) => {
@@ -17,6 +17,16 @@ const TodoApp = () => {
     const newTask = tasks.filter((_, ind) => ind != index);
     setTasks(newTask);
   };
+
+  const clearAllTasks = () => {
+    setTasks([]);
+  };
+
+  const clearCompletedTask=()=>{
+    const newTask=tasks.filter((ele,_)=>ele.completed =! true)
+    setTasks(newTask)
+
+  }
 
   return (
     <div className="h-screen bg-black text-white pt-15">
@@ -81,7 +91,10 @@ const TodoApp = () => {
               </div>
               <div className="flex gap-2">
                 <span className="cursor-pointer h-5 w-5 bg-yellow-400 rounded-full p-2"></span>
-                <span onClick={()=>deleteTask(index)} className="cursor-pointer h-5 w-5 bg-red-400 rounded-full p-2"></span>
+                <span
+                  onClick={() => deleteTask(index)}
+                  className="cursor-pointer h-5 w-5 bg-red-400 rounded-full p-2"
+                ></span>
               </div>
             </div>
           ))}
@@ -89,10 +102,13 @@ const TodoApp = () => {
 
         {/* last portion of this project */}
         <div className="flex gap-4 font-medium">
-          <button className="cursor-pointer px-3 py-2 rounded-lg bg-red-400 text-black">
+          <button onClick={clearCompletedTask} className="cursor-pointer px-3 py-2 rounded-lg bg-red-400 text-black">
             Clear Completed
           </button>
-          <button className="cursor-pointer px-3 py-2 rounded-lg bg-[#222]">
+          <button
+            onClick={clearAllTasks}
+            className="cursor-pointer px-3 py-2 rounded-lg bg-[#222]"
+          >
             Clear All
           </button>
         </div>
