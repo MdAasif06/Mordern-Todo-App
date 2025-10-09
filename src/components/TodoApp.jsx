@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 
 const TodoApp = () => {
-  const [task,setTask]=useState("");
+  const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([
     { task: "Make Dosa for mummy", completed: "flase" },
     { task: "Make Dosa for mummy", completed: "flase" },
-]);
+  ]);
 
-const addTask=(e)=>{
-  // e.preventDefault()
-  setTasks([...tasks,{task:task,completed:false}])
-  setTask('')
-}
+  const addTask = (e) => {
+    // e.preventDefault()
+    setTasks([...tasks, { task: task, completed: false }]);
+    setTask("");
+  };
+
+  const deleteTask = (index) => {
+    const newTask = tasks.filter((_, ind) => ind != index);
+    setTasks(newTask);
+  };
 
   return (
     <div className="h-screen bg-black text-white pt-15">
@@ -20,13 +25,20 @@ const addTask=(e)=>{
         <div className="text-green-400 text-3xl font-semibold">TODO App</div>
         {/* ----------input and button section */}
         <div className="flex gap-4">
-          <input onChange={(e)=>setTask(e.target.value)} value={task}
-          onKeyDown={(e)=>{e.key === 'Enter' && addTask()}}
+          <input
+            onChange={(e) => setTask(e.target.value)}
+            value={task}
+            onKeyDown={(e) => {
+              e.key === "Enter" && addTask();
+            }}
             className="rounded-lg px-5 py-3 w-full bg-[#222] outline-none"
             type="text"
             placeholder="Enter your new task"
           />
-          <button onClick={addTask} className="cursor-pointer bg-green-400 px-5 py-3 rounded-lg text-black font-semibold">
+          <button
+            onClick={addTask}
+            className="cursor-pointer bg-green-400 px-5 py-3 rounded-lg text-black font-semibold"
+          >
             Add
           </button>
         </div>
@@ -36,8 +48,12 @@ const addTask=(e)=>{
             <button className="bg-green-400 px-4 py-1 cursor-pointer text-black font-semi rounded-lg">
               All
             </button>
-            <button className="bg-[#222] px-4 rounded-sm cursor-pointer">Active</button>
-            <button className="bg-[#222] px-4 rounded-sm cursor-pointer">Completed</button>
+            <button className="bg-[#222] px-4 rounded-sm cursor-pointer">
+              Active
+            </button>
+            <button className="bg-[#222] px-4 rounded-sm cursor-pointer">
+              Completed
+            </button>
           </div>
           <span className="text-xl">3 task</span>
         </div>
@@ -45,15 +61,27 @@ const addTask=(e)=>{
         {/* ----- this div contain all tasks */}
         <div className="flex flex-col gap-3 h-[270px] overflow-scroll hide-scrollbar">
           {tasks.map((ele, index) => (
-            <div key={index} className="flex justify-between bg-[#222] px-3 py-2 rounded-lg">
+            <div
+              key={index}
+              className="flex justify-between bg-[#222] px-3 py-2 rounded-lg"
+            >
               <div className="flex gap-2">
-                <input className="accent-green-400" type="checkbox" id={index} />
+                <input
+                  className="accent-green-400"
+                  type="checkbox"
+                  id={index}
+                />
                 {/* only htmlFor work with label */}
-                <label htmlFor={index} className="text-lg cursor-pointer select-none">{ele.task}</label> 
+                <label
+                  htmlFor={index}
+                  className="text-lg cursor-pointer select-none"
+                >
+                  {ele.task}
+                </label>
               </div>
               <div className="flex gap-2">
                 <span className="cursor-pointer h-5 w-5 bg-yellow-400 rounded-full p-2"></span>
-                <span className="cursor-pointer h-5 w-5 bg-red-400 rounded-full p-2"></span>
+                <span onClick={()=>deleteTask(index)} className="cursor-pointer h-5 w-5 bg-red-400 rounded-full p-2"></span>
               </div>
             </div>
           ))}
@@ -61,8 +89,12 @@ const addTask=(e)=>{
 
         {/* last portion of this project */}
         <div className="flex gap-4 font-medium">
-            <button className="cursor-pointer px-3 py-2 rounded-lg bg-red-400 text-black" >Clear Completed</button>
-            <button className="cursor-pointer px-3 py-2 rounded-lg bg-[#222]">Clear All</button>
+          <button className="cursor-pointer px-3 py-2 rounded-lg bg-red-400 text-black">
+            Clear Completed
+          </button>
+          <button className="cursor-pointer px-3 py-2 rounded-lg bg-[#222]">
+            Clear All
+          </button>
         </div>
       </div>
     </div>
