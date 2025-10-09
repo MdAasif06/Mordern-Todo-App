@@ -5,13 +5,13 @@ const TodoApp = () => {
   const [tasks, setTasks] = useState([
     { task: "Make Dosa for mummy-1", completed: true },
     { task: "Make Dosa for mummy-2", completed: true },
-    { task: "Make Dosa for mummy-3", completed: true },
-    { task: "Make Dosa for mummy-4", completed: true },
     { task: "Make Dosa for fufi", completed: false },
   ]);
 
   const [editIndex, setEditIndex] = useState("");
   const [editTask, setEditTask] = useState("");
+
+  const [filter, setFilter] = useState("All");
 
   const addTask = (e) => {
     // e.preventDefault()
@@ -29,7 +29,7 @@ const TodoApp = () => {
   };
 
   const clearCompletedTask = () => {
-    const newTask = tasks.filter((ele, _) => (ele.completed = !true));
+    const newTask = tasks.filter((ele, _) => ele.completed != true);
     setTasks(newTask);
   };
 
@@ -43,6 +43,20 @@ const TodoApp = () => {
       setEditIndex(index);
     }
   };
+
+  const toggleTask = (index) => {
+    setTasks(
+      tasks.map((ele, ind) =>
+        ind == index ? { task: ele.task, completed: !ele.completed } : ele
+      )
+    );
+  };
+
+  const filterTasks = tasks.filter((ele) => {
+    if (filter == "All") return ele;
+    if (filter == "Active") return ele.completed == false;
+    if (filter == "Completed") return ele.completed == true;
+  });
 
   return (
     <div className="h-screen bg-black text-white pt-15">
@@ -71,22 +85,43 @@ const TodoApp = () => {
         {/* filter section */}
         <div className="flex justify-between items-center">
           <div className="flex gap-5">
-            <button className="bg-green-400 px-4 py-1 cursor-pointer text-black font-semi rounded-lg">
+            <button
+              onClick={() => {
+                setFilter("All");
+              }}
+              className={`px-4 py-1 cursor-pointer font-semi rounded-lg ${
+                filter === "All" ? "bg-green-400 text-black" : "bg-[#222]"
+              }`}
+            >
               All
             </button>
-            <button className="bg-[#222] px-4 rounded-sm cursor-pointer">
+            <button
+              onClick={() => {
+                setFilter("Active");
+              }}
+              className={`px-4 rounded-sm cursor-pointer ${
+                filter === "Active" ? "bg-green-400 text-black" : "bg-[#222]"
+              }`}
+            >
               Active
             </button>
-            <button className="bg-[#222] px-4 rounded-sm cursor-pointer">
+            <button
+              onClick={() => {
+                setFilter("Completed");
+              }}
+              className={`px-4 rounded-sm cursor-pointer ${
+                filter === "Completed" ? "bg-green-400 text-black" : "bg-[#222]"
+              }`}
+            >
               Completed
             </button>
           </div>
-          <span className="text-xl">3 task</span>
+          <span className="text-xl">{tasks.length}</span>
         </div>
 
         {/* ----- this div contain all tasks */}
         <div className="flex flex-col gap-3 h-[270px] overflow-scroll hide-scrollbar">
-          {tasks.map((ele, index) => (
+          {filterTasks.map((ele, index) => (
             <div
               key={index}
               className="flex justify-between bg-[#222] px-3 py-2 rounded-lg gap-5"
@@ -105,10 +140,14 @@ const TodoApp = () => {
                     className="accent-green-400"
                     type="checkbox"
                     id={index}
+                    checked={ele.completed}
+                    onChange={() => toggleTask(index)}
                   />
                   <label
                     htmlFor={index}
-                    className="text-lg cursor-pointer select-none"
+                    className={`text-lg cursor-pointer select-none ${
+                      ele.completed && "line-through"
+                    }`}
                   >
                     {ele.task}
                   </label>
