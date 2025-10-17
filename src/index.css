@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "remixicon/fonts/remixicon.css";
+
 /* Hide scrollbar but allow scrolling */
 .hide-scrollbar {
   scrollbar-width: none; /* Firefox */

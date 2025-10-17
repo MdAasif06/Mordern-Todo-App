@@ -119,7 +119,7 @@ const TodoApp = () => {
                 filter === "Completed" ? "bg-green-400 text-black" : "bg-[#222]"
               }`}
             >
-              Completed
+               Completed
             </button>
           </div>
           <span className="text-xl">{tasks.length}</span>
@@ -161,12 +161,14 @@ const TodoApp = () => {
               )}
               <div className="flex gap-2">
                 <span
+                
                   onClick={() => deleteTask(index)}
-                  className="cursor-pointer h-5 w-5 bg-red-400 rounded-full p-2"
+                  className="ri-delete-bin-7-fill text-black cursor-pointer bg-red-400 rounded-full px-2 py-1"
                 ></span>
+                
                 <span
                   onClick={() => editingTask(index)}
-                  className={`cursor-pointer h-5 w-5 rounded-full p-2
+                  className={`ri-pencil-ai-fill text-black cursor-pointer rounded-full px-2 py-1
                   ${editIndex === index ? "bg-green-400" : "bg-yellow-300"}`}
                 ></span>
               </div>
@@ -186,7 +188,7 @@ const TodoApp = () => {
             onClick={clearAllTasks}
             className="cursor-pointer px-3 py-2 rounded-lg bg-[#222]"
           >
-            Clear All
+           Clear All
           </button>
         </div>
       </div>
