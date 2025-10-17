@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const TodoApp = () => {
   const [task, setTask] = useState("");
-  const [tasks, setTasks] = useState([
-    { task: "Make Dosa for mummy-1", completed: true },
-    { task: "Make Dosa for mummy-2", completed: true },
-    { task: "Make Dosa for fufi", completed: false },
-  ]);
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks")) || []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const [editIndex, setEditIndex] = useState("");
   const [editTask, setEditTask] = useState("");
@@ -15,12 +17,16 @@ const TodoApp = () => {
 
   const addTask = (e) => {
     // e.preventDefault()
+    if(task.trim() === ""){
+      return
+    }
     setTasks([...tasks, { task: task, completed: false }]);
     setTask("");
   };
 
   const deleteTask = (index) => {
     const newTask = tasks.filter((_, ind) => ind != index);
+    // console.log(index)
     setTasks(newTask);
   };
 
